@@ -1,5 +1,8 @@
 package de.rottstegge.restmenu.controller;
 
+import de.rottstegge.restmenu.mapper.GreetingMapper;
+import de.rottstegge.restmenu.model.Greeting;
+import de.rottstegge.restmenu.repository.GreetingRepository;
 import de.rottstegge.v1.model.GreetingDto;
 import de.rottstegge.v1.server.GreetingApi;
 import org.springframework.http.HttpStatus;
@@ -13,10 +16,18 @@ import javax.validation.constraints.NotNull;
 @RestController
 public class GreetingController implements GreetingApi {
 
+    private final GreetingRepository greetingRepository;
+
+    public GreetingController(GreetingRepository greetingRepository) {
+        this.greetingRepository = greetingRepository;
+    }
+
     @Override
-    public ResponseEntity<GreetingDto> getGreeting(@NotNull @Valid  @RequestParam(value = "name") String name) throws Exception {
-        GreetingDto greetingDto = new GreetingDto();
-        greetingDto.setName(name);
-        return new ResponseEntity<>(greetingDto, HttpStatus.OK);
+    public ResponseEntity<GreetingDto> getGreeting(@NotNull @Valid @RequestParam(value = "name") String name) throws Exception {
+        Greeting greeting = new Greeting();
+        greeting.setName(name);
+        greeting = greetingRepository.save(greeting);
+
+        return new ResponseEntity<>(GreetingMapper.INSTANCE.map(greeting), HttpStatus.OK);
     }
 }

@@ -1,12 +1,12 @@
 openapi: 3.0.0
 info:
   version: 1.0.0
-  title: UC Service (internal) REST interface
+  title: Restmenu REST interface
   description: >
     This interface description describes the Restmenu REST internal interface.
 tags:
   - name: Restmenu
-    description: Part of the internal UC service REST interface that can be used to get feasibility information.
+    description: Restmenu REST interface.
 paths:
   /greeting:
     get:
@@ -40,6 +40,9 @@ components:
       type: object
       description: A user
       properties:
+        id:
+          type: integer
+          example: 1
         name:
           type: string
           example: Max
