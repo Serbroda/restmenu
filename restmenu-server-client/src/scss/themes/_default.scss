@@ -1,0 +1,20 @@
+@use 'src/scss/variables/variables';
+@import 'src/scss/themes/food';
+
+@mixin _basic-overrides() {
+  .mat-drawer-container {
+    height: calc(100% - #{variables.$toolbar-height});
+  }
+  .mat-sidenav {
+    min-width: variables.$sidenav-width;
+  }
+  .mat-toolbar {
+    min-height: variables.$toolbar-height;
+    height: variables.$toolbar-height;
+  }
+  table.mat-table {
+    width: 100%;
+  }
+}
+
+@include _basic-overrides();

@@ -1,0 +1,26 @@
+<main [ngClass]="className">
+  <mat-toolbar color="primary" style="position: relative; z-index: 99" class="mat-elevation-z3">
+    <mat-toolbar-row>
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <!--<a class="logo" href="/">
+        <strong style="margin-left: 30px; color: red">Rec</strong><strong style="color: white">Owl</strong>
+      </a>-->
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav [opened]="true" [mode]="'side'">
+      <mat-nav-list>
+        <a mat-list-item [routerLink]="['/home']" routerLinkActive="active"><mat-icon>home</mat-icon> Home</a>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <div class="app-content-container">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</main>

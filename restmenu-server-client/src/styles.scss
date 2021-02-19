@@ -1,0 +1,20 @@
+@use 'src/scss/variables/variables';
+@import 'scss/themes/default';
+
+html,
+body,
+main {
+  height: 100%;
+  margin: 0;
+}
+body {
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+.app-content-container {
+  min-height: calc(100% - #{variables.$toolbar-height});
+  padding: 20px;
+}
+
+.mat-toolbar-item-spacer {
+  flex: 1 1 auto;
+}
