@@ -23,6 +23,7 @@
 		<module>restmenu-server-webapp</module>
         <module>restmenu-server-sdk-server</module>
 		<module>restmenu-server-database</module>
+		<module>restmenu-server-sdk-angular</module>
 	</modules>
 
 	<dependencyManagement>

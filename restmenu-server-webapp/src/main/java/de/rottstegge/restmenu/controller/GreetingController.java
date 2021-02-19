@@ -7,6 +7,7 @@ import de.rottstegge.v1.model.GreetingDto;
 import de.rottstegge.v1.server.GreetingApi;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,6 +23,7 @@ public class GreetingController implements GreetingApi {
         this.greetingRepository = greetingRepository;
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @Override
     public ResponseEntity<GreetingDto> getGreeting(@NotNull @Valid @RequestParam(value = "name") String name) throws Exception {
         Greeting greeting = new Greeting();
