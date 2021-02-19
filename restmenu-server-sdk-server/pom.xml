@@ -5,7 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>de.rottstegge</groupId>
-    <artifactId>restmenu-server-server-sdk</artifactId>
+    <artifactId>restmenu-server-sdk-server</artifactId>
+    <name>restmenu-server-sdk-server</name>
 
     <parent>
         <artifactId>restmenu-server</artifactId>
