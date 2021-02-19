@@ -22,7 +22,8 @@
 	<modules>
 		<module>restmenu-server-webapp</module>
         <module>restmenu-server-sdk-server</module>
-    </modules>
+		<module>restmenu-server-database</module>
+	</modules>
 
 	<dependencyManagement>
 		<dependencies>

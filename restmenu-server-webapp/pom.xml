@@ -18,6 +18,11 @@
 	<dependencies>
 		<dependency>
 			<groupId>de.rottstegge</groupId>
+			<artifactId>restmenu-server-database</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>de.rottstegge</groupId>
 			<artifactId>restmenu-server-server-sdk</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
