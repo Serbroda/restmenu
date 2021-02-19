@@ -1,0 +1,47 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: UC Service (internal) REST interface
+  description: >
+    This interface description describes the Restmenu REST internal interface.
+tags:
+  - name: Restmenu
+    description: Part of the internal UC service REST interface that can be used to get feasibility information.
+paths:
+  /greeting:
+    get:
+      tags:
+        - Greeting
+      summary: Get a greeting
+      description: Get a greeting
+      operationId: getGreeting
+      parameters:
+        - name: name
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GreetingDto"
+servers:
+  - url: http://localhost/unitcheck-service-rest/rest/v1
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+  schemas:
+    GreetingDto:
+      type: object
+      description: A user
+      properties:
+        name:
+          type: string
+          example: Max
+security:
+  - basicAuth: []
