@@ -3,6 +3,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
+	<groupId>de.rottstegge</groupId>
+	<artifactId>restmenu-webapp</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -10,20 +14,15 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
-	<groupId>de.rottstegge</groupId>
-	<artifactId>restmenu-server-webapp</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>restmenu-server-webapp</name>
-
 	<dependencies>
 		<dependency>
 			<groupId>de.rottstegge</groupId>
-			<artifactId>restmenu-server-database</artifactId>
+			<artifactId>restmenu-database</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>de.rottstegge</groupId>
-			<artifactId>restmenu-server-sdk-server</artifactId>
+			<artifactId>restmenu-sdk-server</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 

@@ -6,7 +6,7 @@
     "types": [],
     "paths": {
       "@angular/*": ["./node_modules/@angular/*"],
-      "bla/*": ["../restmenu-server-sdk-angular/target/generated-sources*"]
+      "bla/*": ["../restmenu-sdk-angular/target/generated-sources*"]
     }
   },
   "files": [

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GreetingService } from '../../../../../restmenu-server-sdk-angular/target/generated-sources';
+import { GreetingService } from '../../../../../restmenu-sdk-angular/target/generated-sources';
 
 @Component({
   selector: 'app-home-page',

@@ -25,7 +25,7 @@
     "@capacitor/android": "^2.4.6",
     "@capacitor/angular": "^1.0.3",
     "@capacitor/core": "latest",
-    "restmenu-server-sdk-angular": "file:../restmenu-server-sdk-angular/target/generated-sources",
+    "restmenu-server-sdk-angular": "file:../restmenu-sdk-angular/target/generated-sources",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"
