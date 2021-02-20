@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>de.rottstegge</groupId>
-  <artifactId>restmenu-server-client</artifactId>
+  <artifactId>restmenu-client</artifactId>
 
   <parent>
     <artifactId>restmenu-server</artifactId>

@@ -11,7 +11,7 @@
 	</parent>
 
 	<groupId>de.rottstegge</groupId>
-	<artifactId>restmenu-server</artifactId>
+	<artifactId>restmenu</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	
