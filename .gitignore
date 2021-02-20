@@ -269,3 +269,5 @@ dist
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/git,maven,intellij+all,java,node,visualstudiocode
+
+restmenu-webapp/src/main/resources/public
