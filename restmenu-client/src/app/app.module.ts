@@ -14,6 +14,8 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
 import {HttpClientModule} from '@angular/common/http';
 import {BASE_PATH} from '../../../restmenu-sdk-angular/target/generated-sources';
 
+import { environment } from '../environments/environment';
+
 @NgModule({
   declarations: [AppComponent, HomePageComponent],
   imports: [
@@ -27,7 +29,7 @@ import {BASE_PATH} from '../../../restmenu-sdk-angular/target/generated-sources'
     MatListModule,
     HttpClientModule
   ],
-  providers: [{provide: BASE_PATH, useValue: 'http://localhost:8080'}],
+  providers: [{provide: BASE_PATH, useValue: environment.apiBaseUrl}],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
