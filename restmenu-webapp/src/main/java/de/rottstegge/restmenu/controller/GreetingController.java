@@ -1,35 +1,33 @@
 package de.rottstegge.restmenu.controller;
 
-import de.rottstegge.restmenu.mapper.GreetingMapper;
-import de.rottstegge.restmenu.model.Greeting;
-import de.rottstegge.restmenu.repository.GreetingRepository;
-import de.rottstegge.v1.model.GreetingDto;
-import de.rottstegge.v1.server.GreetingApi;
+import de.rottstegge.restmenu.mapper.RestaurantMapper;
+import de.rottstegge.restmenu.model.Restaurant;
+import de.rottstegge.restmenu.repository.RestaurantRepository;
+import de.rottstegge.v1.model.RestaurantDto;
+import de.rottstegge.v1.server.RestaurantsApi;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
-public class GreetingController implements GreetingApi {
+public class GreetingController implements RestaurantsApi {
 
-    private final GreetingRepository greetingRepository;
+    private final RestaurantRepository restaurantRepository;
 
-    public GreetingController(GreetingRepository greetingRepository) {
-        this.greetingRepository = greetingRepository;
+    public GreetingController(RestaurantRepository restaurantRepository) {
+        this.restaurantRepository = restaurantRepository;
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @Override
-    public ResponseEntity<GreetingDto> getGreeting(@NotNull @Valid @RequestParam(value = "name") String name) throws Exception {
-        Greeting greeting = new Greeting();
-        greeting.setName(name);
-        greeting = greetingRepository.save(greeting);
+    public ResponseEntity<RestaurantDto> getRestaurants(@Valid String name) throws Exception {
+        Restaurant restaurant = new Restaurant();
+        restaurant.setName(name);
+        restaurant = restaurantRepository.save(restaurant);
 
-        return new ResponseEntity<>(GreetingMapper.INSTANCE.map(greeting), HttpStatus.OK);
+        return new ResponseEntity<>(RestaurantMapper.INSTANCE.map(restaurant), HttpStatus.OK);
     }
 }

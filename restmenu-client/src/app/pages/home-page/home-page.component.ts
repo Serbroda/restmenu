@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { GreetingService } from '../../../../../restmenu-sdk-angular/target/generated-sources';
 
 @Component({
   selector: 'app-home-page',
@@ -8,14 +7,12 @@ import { GreetingService } from '../../../../../restmenu-sdk-angular/target/gene
 })
 export class HomePageComponent implements OnInit {
 
-  constructor(private greet: GreetingService) { }
+  constructor() { }
 
   ngOnInit(): void {
   }
 
   sendGreeting(): void {
-    this.greet.getGreeting('Danny').subscribe((res) => {
-      console.log(res)
-    })
+
   }
 }

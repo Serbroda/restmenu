@@ -5,10 +5,11 @@ import de.rottstegge.restmenu.model.base.AbstractBaseEntity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "greeting")
-public class Greeting extends AbstractBaseEntity {
+@Table(name = "restaurant")
+public class Restaurant extends AbstractBaseEntity {
 
     private String name;
+    private String description;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,5 +24,13 @@ public class Greeting extends AbstractBaseEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

@@ -7,18 +7,15 @@ info:
 tags:
   - name: Restmenu
     description: Restmenu REST interface.
+
 paths:
-  /greeting:
+  /restaurants:
     get:
-      tags:
-        - Greeting
-      summary: Get a greeting
-      description: Get a greeting
-      operationId: getGreeting
+      operationId: getRestaurants
       parameters:
         - name: name
           in: query
-          required: true
+          required: false
           schema:
             type: string
       responses:
@@ -27,7 +24,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GreetingDto"
+                $ref: "#/components/schemas/RestaurantDto"
 servers:
   - url: http://localhost/v1
 components:
@@ -36,15 +33,18 @@ components:
       type: http
       scheme: basic
   schemas:
-    GreetingDto:
+    RestaurantDto:
       type: object
-      description: A user
       properties:
         id:
           type: integer
+          format: int64
           example: 1
         name:
           type: string
-          example: Max
+          example: Restaurant ABC
+        description:
+          type: string
+          example: A burger Restaurants
 security:
   - basicAuth: []
