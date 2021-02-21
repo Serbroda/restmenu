@@ -1,4 +1,4 @@
-package de.rottstegge.restmenu.controller.v1;
+package de.rottstegge.restmenu.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import javax.persistence.EntityNotFoundException;
 
 @ControllerAdvice
-public class ExceptionControllerAdvice {
+public class ExceptionHandlerControllerAdvice {
 
     @ExceptionHandler(value = EntityNotFoundException.class)
     public ResponseEntity<String> handleEntityNotFoundException(Exception e) {
