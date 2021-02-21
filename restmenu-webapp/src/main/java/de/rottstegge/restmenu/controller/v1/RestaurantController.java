@@ -8,6 +8,7 @@ import de.rottstegge.v1.server.RestaurantsApi;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,7 +27,7 @@ public class RestaurantController implements RestaurantsApi {
     }
 
     @Override
-    public ResponseEntity<RestaurantDto> getRestaurantById(Long restaurantId) throws Exception {
+    public ResponseEntity<RestaurantDto> getRestaurantById(@PathVariable("restaurantId") Long restaurantId) throws Exception {
         return new ResponseEntity<>(RestaurantMapper.INSTANCE.map(restaurantRepository.getOne(restaurantId)), HttpStatus.OK);
     }
 
