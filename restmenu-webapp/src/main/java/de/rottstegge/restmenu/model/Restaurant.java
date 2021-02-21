@@ -10,6 +10,8 @@ public class Restaurant extends AbstractBaseEntity {
 
     private String name;
     private String description;
+    private Address address;
+    private Contact contact;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +20,7 @@ public class Restaurant extends AbstractBaseEntity {
         return doGetId();
     }
 
+    @Column(nullable = false)
     public String getName() {
         return name;
     }
@@ -32,5 +35,23 @@ public class Restaurant extends AbstractBaseEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Embedded
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    @Embedded
+    public Contact getContact() {
+        return contact;
+    }
+
+    public void setContact(Contact contact) {
+        this.contact = contact;
     }
 }

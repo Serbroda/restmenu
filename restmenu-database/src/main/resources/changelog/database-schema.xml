@@ -20,8 +20,23 @@
             </column>
             <column name="created" type="datetime"/>
             <column name="last_modified" type="datetime"/>
-            <column name="name" type="varchar(120)"/>
+
+            <column name="name" type="varchar(150)">
+                <constraints nullable="false"/>
+            </column>
             <column name="description" type="varchar(255)"/>
+            <column name="street" type="varchar(150)"/>
+            <column name="zipcode" type="varchar(20)"/>
+            <column name="city" type="varchar(150)"/>
+            <column name="country" type="varchar(150)"/>
+            <column name="salutation" type="varchar(150)"/>
+            <column name="firstname" type="varchar(150)"/>
+            <column name="lastname" type="varchar(150)"/>
+            <column name="phone1" type="varchar(80)"/>
+            <column name="phone2" type="varchar(80)"/>
+            <column name="email1" type="varchar(150)"/>
+            <column name="email2" type="varchar(150)"/>
+            <column name="website" type="varchar(255)"/>
         </createTable>
     </changeSet>
 
