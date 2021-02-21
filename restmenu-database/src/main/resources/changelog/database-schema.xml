@@ -10,6 +10,11 @@
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints nullable="false"/>
             </column>
+            <column name="version" type="int" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="datetime"/>
+            <column name="last_modified" type="datetime"/>
             <column name="name" type="varchar(80)"/>
         </createTable>
     </changeSet>
