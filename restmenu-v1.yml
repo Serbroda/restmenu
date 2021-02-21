@@ -12,12 +12,25 @@ paths:
   /restaurants:
     get:
       operationId: getRestaurants
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RestaurantDto'
+  /restaurants/{restaurantId}:
+    get:
+      operationId: getRestaurantById
       parameters:
-        - name: name
-          in: query
-          required: false
+        - name: restaurantId
+          in: path
+          required: true
           schema:
-            type: string
+            type: integer
+            format: int64
       responses:
         200:
           description: Successful operation
@@ -25,6 +38,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/RestaurantDto"
+        404:
+          description: Entity with specified ID not found
 
 servers:
   - url: http://localhost/api/v1
@@ -34,18 +49,94 @@ components:
       type: http
       scheme: basic
   schemas:
+
     RestaurantDto:
       type: object
       properties:
         id:
           type: integer
           format: int64
-          example: 1
+          example: 123
         name:
           type: string
-          example: Restaurant ABC
+          example: Ribhouse Exemplarus
         description:
           type: string
-          example: A burger Restaurants
+          example: Steakhouse
+        address:
+          $ref: '#/components/schemas/AddressDto'
+        contact:
+          $ref: '#/components/schemas/ContactDto'
+
+    AddressDto:
+      type: object
+      properties:
+        addressLine1:
+          type: string
+          maxLength: 150
+          example: 1790 Oak Street
+        addressLine2:
+          type: string
+          maxLength: 150
+          example: East Syracuse
+        zipCode:
+          type: string
+          maxLength: 150
+          example: 13057
+        city:
+          type: string
+          maxLength: 150
+          example: New York
+        country:
+          type: string
+          maxLength: 150
+          example: USA
+
+    ContactDto:
+      type: object
+      properties:
+        salutation:
+          type: string
+          maxLength: 150
+          example: Mr
+        firstName:
+          type: string
+          maxLength: 150
+          example: John
+        lastName:
+          type: string
+          maxLength: 150
+          example: Doe
+        phone1:
+          $ref: '#/components/schemas/PhoneNumber'
+        phone2:
+          $ref: '#/components/schemas/PhoneNumber'
+        eMail1:
+          $ref: '#/components/schemas/EmailAddress'
+        eMail2:
+          $ref: '#/components/schemas/EmailAddress'
+        website:
+          $ref: '#/components/schemas/Website'
+
+    PhoneNumber:
+      type: string
+      pattern: '\\+[ 0-9]{1,19}'
+      description: Phonenumber represented in international format
+      example: +49 123 1234567
+
+    EmailAddress:
+      type: string
+      pattern: '([a-zA-Z0-9_\\-&\\.])+@[a-zA-Z0-9]([a-zA-Z0-9_\\-&])*\\.([a-zA-Z0-9_\\-&](\\.)?)*([a-zA-Z0-9])+'
+      maxLength: 255
+      description: An email address
+      example: info@dg.nl
+
+    Website:
+      type: string
+      pattern: '(https?:\/\/)?(www\.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)|(https?:\/\/)?(www\.)?(?!ww)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)'
+      maxLength: 255
+      description: A website
+      example: https://www.test.com
+
 security:
   - basicAuth: []

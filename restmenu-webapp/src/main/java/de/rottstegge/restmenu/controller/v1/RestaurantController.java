@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -25,11 +26,12 @@ public class RestaurantController implements RestaurantsApi {
     }
 
     @Override
-    public ResponseEntity<RestaurantDto> getRestaurants(@Valid String name) throws Exception {
-        Restaurant restaurant = new Restaurant();
-        restaurant.setName(name);
-        restaurant = restaurantRepository.save(restaurant);
+    public ResponseEntity<RestaurantDto> getRestaurantById(Long restaurantId) throws Exception {
+        return new ResponseEntity<>(RestaurantMapper.INSTANCE.map(restaurantRepository.getOne(restaurantId)), HttpStatus.OK);
+    }
 
-        return new ResponseEntity<>(RestaurantMapper.INSTANCE.map(restaurant), HttpStatus.OK);
+    @Override
+    public ResponseEntity<List<RestaurantDto>> getRestaurants() throws Exception {
+        return new ResponseEntity<>(RestaurantMapper.INSTANCE.mapAll(restaurantRepository.findAll()), HttpStatus.OK);
     }
 }
