@@ -43,6 +43,7 @@ paths:
 
 servers:
   - url: http://localhost/api/v1
+
 components:
   securitySchemes:
     basicAuth:
@@ -91,6 +92,8 @@ components:
           type: string
           maxLength: 150
           example: USA
+        coordinates:
+          $ref: '#/components/schemas/CoordinatesDto'
 
     ContactDto:
       type: object
@@ -137,6 +140,18 @@ components:
       maxLength: 255
       description: A website
       example: https://www.test.com
+
+    CoordinatesDto:
+      type: object
+      properties:
+        latitude:
+          type: number
+          format: double
+          example: 40.730610
+        longitude:
+          type: number
+          format: double
+          example: -73.935242
 
 security:
   - basicAuth: []

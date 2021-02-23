@@ -2,6 +2,7 @@ package de.rottstegge.restmenu.model;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
 
 @Embeddable
 public class Address {
@@ -11,6 +12,7 @@ public class Address {
     private String zipCode;
     private String city;
     private String country;
+    private Coordinates coordinates;
 
     @Column(name = "addressline1")
     public String getAddressLine1() {
@@ -53,5 +55,14 @@ public class Address {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    @Embedded
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
     }
 }

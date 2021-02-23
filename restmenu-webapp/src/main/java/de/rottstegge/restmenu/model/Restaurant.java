@@ -3,6 +3,7 @@ package de.rottstegge.restmenu.model;
 import de.rottstegge.restmenu.model.base.AbstractBaseEntity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "restaurant")
@@ -12,6 +13,7 @@ public class Restaurant extends AbstractBaseEntity {
     private String description;
     private Address address;
     private Contact contact;
+    private List<Menu> menus;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,5 +55,13 @@ public class Restaurant extends AbstractBaseEntity {
 
     public void setContact(Contact contact) {
         this.contact = contact;
+    }
+
+    public List<Menu> getMenus() {
+        return menus;
+    }
+
+    public void setMenus(List<Menu> menus) {
+        this.menus = menus;
     }
 }

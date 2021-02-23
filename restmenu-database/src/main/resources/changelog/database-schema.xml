@@ -30,6 +30,8 @@
             <column name="zipcode" type="varchar(20)"/>
             <column name="city" type="varchar(150)"/>
             <column name="country" type="varchar(150)"/>
+            <column name="latitude" type="double"/>
+            <column name="longitude" type="double"/>
             <column name="salutation" type="varchar(150)"/>
             <column name="firstname" type="varchar(150)"/>
             <column name="lastname" type="varchar(150)"/>
@@ -39,6 +41,14 @@
             <column name="email2" type="varchar(150)"/>
             <column name="website" type="varchar(255)"/>
         </createTable>
+    </changeSet>
+
+    <changeSet id="2021-02-24: create table menu" author="drottstegge">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="menu"/>
+            </not>
+        </preConditions>
     </changeSet>
 
 </databaseChangeLog>

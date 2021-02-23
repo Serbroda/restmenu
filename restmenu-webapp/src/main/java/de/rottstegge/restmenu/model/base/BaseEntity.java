@@ -1,8 +1,9 @@
 package de.rottstegge.restmenu.model.base;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public interface BaseEntity {
+public interface BaseEntity extends Serializable {
 
     long getId();
 
