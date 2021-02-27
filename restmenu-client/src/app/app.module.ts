@@ -12,7 +12,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import {HttpClientModule} from '@angular/common/http';
-import {BASE_PATH} from '../../../restmenu-sdk-angular/target/generated-sources';
+import {BASE_PATH} from '../../../restmenu-sdk-angular/target/generated-sources/dist';
 
 import { environment } from '../environments/environment';
 

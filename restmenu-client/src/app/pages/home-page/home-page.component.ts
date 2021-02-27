@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {DefaultService} from '../../../../../restmenu-sdk-angular/target/generated-sources/dist'
 
 @Component({
   selector: 'app-home-page',
@@ -7,12 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomePageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private defaultService: DefaultService) { }
 
   ngOnInit(): void {
   }
 
   sendGreeting(): void {
-
+    this.defaultService.createRestaurant({name: 'Test'}).subscribe((res) => console.log(res));
   }
 }
