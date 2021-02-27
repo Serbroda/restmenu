@@ -57,6 +57,7 @@ public class Restaurant extends AbstractBaseEntity {
         this.contact = contact;
     }
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
     public List<Menu> getMenus() {
         return menus;
     }

@@ -9,7 +9,11 @@ import java.util.List;
 @Table(name = "menu")
 public class Menu extends AbstractBaseEntity {
 
-    private List<Category> categories;
+    private Restaurant restaurant;
+
+    private String name;
+    private String description;
+    private List<Meal> meals;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,12 +22,37 @@ public class Menu extends AbstractBaseEntity {
         return doGetId();
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "menu")
-    public List<Category> getCategories() {
-        return categories;
+    @ManyToOne(cascade = {CascadeType.ALL})
+    public Restaurant getRestaurant() {
+        return restaurant;
     }
 
-    public void setCategories(List<Category> categories) {
-        this.categories = categories;
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "menu")
+    public List<Meal> getMeals() {
+        return meals;
+    }
+
+    public void setMeals(List<Meal> meals) {
+        this.meals = meals;
     }
 }

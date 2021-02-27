@@ -11,6 +11,8 @@ public class Category extends AbstractBaseEntity {
 
     private Menu menu;
     private List<Meal> meals;
+    private String name;
+    private String description;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,5 +37,21 @@ public class Category extends AbstractBaseEntity {
 
     public void setMeals(List<Meal> meals) {
         this.meals = meals;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

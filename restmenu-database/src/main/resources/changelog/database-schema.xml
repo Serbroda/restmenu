@@ -11,6 +11,7 @@
                 <tableExists tableName="restaurant"/>
             </not>
         </preConditions>
+
         <createTable tableName="restaurant">
             <column name="id" type="bigint" autoIncrement="true" incrementBy="1">
                 <constraints nullable="false"/>
@@ -43,12 +44,96 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="2021-02-24: create table menu" author="drottstegge">
+    <changeSet id="2021-02-27: create table menu" author="drottstegge">
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="menu"/>
             </not>
         </preConditions>
+
+        <createTable tableName="menu">
+            <column name="id" type="bigint" autoIncrement="true" incrementBy="1">
+                <constraints nullable="false"/>
+            </column>
+            <column name="version" type="int" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="datetime"/>
+            <column name="last_modified" type="datetime"/>
+
+            <column name="restaurant_id" type="bigint">
+                <constraints nullable="false" referencedTableName="restaurant" referencedColumnNames="id"
+                             foreignKeyName="fk_menu_restaurant_id"/>
+            </column>
+            <column name="name" type="varchar(150)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="varchar(255)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2021-02-27: create table category" author="drottstegge">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="category"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="category">
+            <column name="id" type="bigint" autoIncrement="true" incrementBy="1">
+                <constraints nullable="false"/>
+            </column>
+            <column name="version" type="int" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="datetime"/>
+            <column name="last_modified" type="datetime"/>
+
+            <column name="menu_id" type="bigint">
+                <constraints nullable="false" referencedTableName="menu" referencedColumnNames="id"
+                             foreignKeyName="fk_category_menu_id"/>
+            </column>
+            <column name="name" type="varchar(150)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="varchar(255)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2021-02-27: create table meal" author="drottstegge">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="meal"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="meal">
+            <column name="id" type="bigint" autoIncrement="true" incrementBy="1">
+                <constraints nullable="false"/>
+            </column>
+            <column name="version" type="int" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="datetime"/>
+            <column name="last_modified" type="datetime"/>
+
+            <column name="menu_id" type="bigint">
+                <constraints nullable="false" referencedTableName="menu" referencedColumnNames="id"
+                             foreignKeyName="fk_meal_menu_id"/>
+            </column>
+
+            <column name="name" type="varchar(150)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="varchar(255)"/>
+            <column name="info" type="varchar(255)"/>
+            <column name="price" type="decimal(9,2)"/>
+
+            <column name="category_id" type="bigint">
+                <constraints referencedTableName="category" referencedColumnNames="id"
+                             foreignKeyName="fk_meal_category_id"/>
+            </column>
+        </createTable>
     </changeSet>
 
 </databaseChangeLog>
