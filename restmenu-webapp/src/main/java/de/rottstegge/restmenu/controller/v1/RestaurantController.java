@@ -2,15 +2,12 @@ package de.rottstegge.restmenu.controller.v1;
 
 import de.rottstegge.restmenu.mapper.RestaurantMapper;
 import de.rottstegge.restmenu.model.Restaurant;
-import de.rottstegge.restmenu.repository.RestaurantRepository;
+import de.rottstegge.restmenu.service.RestaurantService;
 import de.rottstegge.v1.model.RestaurantDto;
 import de.rottstegge.v1.server.RestaurantsApi;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -20,19 +17,26 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class RestaurantController implements RestaurantsApi {
 
-    private final RestaurantRepository restaurantRepository;
+    private final RestaurantService restaurantService;
 
-    public RestaurantController(RestaurantRepository restaurantRepository) {
-        this.restaurantRepository = restaurantRepository;
+    public RestaurantController(RestaurantService restaurantService) {
+        this.restaurantService = restaurantService;
     }
 
     @Override
     public ResponseEntity<RestaurantDto> getRestaurantById(@PathVariable("restaurantId") Long restaurantId) throws Exception {
-        return new ResponseEntity<>(RestaurantMapper.INSTANCE.map(restaurantRepository.getOne(restaurantId)), HttpStatus.OK);
+        return new ResponseEntity<>(RestaurantMapper.INSTANCE.map(restaurantService.getRestaurant(restaurantId)), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<List<RestaurantDto>> getRestaurants() throws Exception {
-        return new ResponseEntity<>(RestaurantMapper.INSTANCE.mapAll(restaurantRepository.findAll()), HttpStatus.OK);
+        return new ResponseEntity<>(RestaurantMapper.INSTANCE.mapAll(restaurantService.getRestaurants()), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<RestaurantDto> createRestaurant(@Valid @RequestBody RestaurantDto restaurantDto) throws Exception {
+        Restaurant restaurant = RestaurantMapper.INSTANCE.map(restaurantDto);
+        restaurant = restaurantService.createRestaurant(restaurant);
+        return new ResponseEntity<>(RestaurantMapper.INSTANCE.map(restaurant), HttpStatus.OK);
     }
 }

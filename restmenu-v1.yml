@@ -21,6 +21,22 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/RestaurantDto'
+    post:
+      operationId: createRestaurant
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RestaurantDto'
+        required: true
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RestaurantDto"
+
   /restaurants/{restaurantId}:
     get:
       operationId: getRestaurantById

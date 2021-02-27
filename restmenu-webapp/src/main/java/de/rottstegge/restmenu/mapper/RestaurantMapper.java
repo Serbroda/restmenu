@@ -16,4 +16,6 @@ public interface RestaurantMapper {
 
     List<RestaurantDto> mapAll(List<Restaurant> source);
 
+    Restaurant map(RestaurantDto source);
+
 }
