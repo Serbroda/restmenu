@@ -1,6 +1,7 @@
 package de.rottstegge.restmenu.mapper;
 
 import de.rottstegge.restmenu.model.Restaurant;
+import de.rottstegge.v1.model.RestaurantCreateDto;
 import de.rottstegge.v1.model.RestaurantDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -17,5 +18,7 @@ public interface RestaurantMapper {
     List<RestaurantDto> mapAll(List<Restaurant> source);
 
     Restaurant map(RestaurantDto source);
+
+    Restaurant map(RestaurantCreateDto source);
 
 }

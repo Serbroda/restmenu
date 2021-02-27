@@ -3,6 +3,7 @@ package de.rottstegge.restmenu.controller.v1;
 import de.rottstegge.restmenu.mapper.RestaurantMapper;
 import de.rottstegge.restmenu.model.Restaurant;
 import de.rottstegge.restmenu.service.RestaurantService;
+import de.rottstegge.v1.model.RestaurantCreateDto;
 import de.rottstegge.v1.model.RestaurantDto;
 import de.rottstegge.v1.server.RestaurantsApi;
 import org.slf4j.Logger;
@@ -39,7 +40,7 @@ public class RestaurantController implements RestaurantsApi {
     }
 
     @Override
-    public ResponseEntity<RestaurantDto> createRestaurant(@Valid @RequestBody RestaurantDto restaurantDto) throws Exception {
+    public ResponseEntity<RestaurantDto> createRestaurant(@Valid @RequestBody RestaurantCreateDto restaurantDto) throws Exception {
         Restaurant restaurant = RestaurantMapper.INSTANCE.map(restaurantDto);
         restaurant = restaurantService.createRestaurant(restaurant);
         return new ResponseEntity<>(RestaurantMapper.INSTANCE.map(restaurant), HttpStatus.OK);
