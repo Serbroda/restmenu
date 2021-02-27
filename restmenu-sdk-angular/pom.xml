@@ -70,10 +70,8 @@
                             stringEnums                        Generate string enums instead of objects for enum values. (Default: false)
                             -->
                             <configOptions>
-                                <apiModulePrefix>restmenuserver</apiModulePrefix>
-                                <modelFileSuffix>DTO</modelFileSuffix>
-                                <modelSuffix>DTO</modelSuffix>
-                                <npmName>restmenu-server-sdk-angular</npmName>
+                                <apiModulePrefix>restmenu</apiModulePrefix>
+                                <npmName>restmenu-sdk-angular</npmName>
                                 <npmRepository>http://my.custom.repo</npmRepository>
                                 <npmVersion>1.0.0</npmVersion>
                                 <providedInRoot>true</providedInRoot>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {DefaultService} from 'restmenu-server-sdk-angular'
+import {DefaultService} from 'restmenu-sdk-angular'
 
 @Component({
   selector: 'app-home-page',
