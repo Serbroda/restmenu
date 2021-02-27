@@ -3,13 +3,19 @@ package de.rottstegge.restmenu.configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.resource.PathResourceResolver;
 
+import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Configuration
@@ -33,7 +39,38 @@ public class WebConfiguration implements WebMvcConfigurer {
 
     @Configuration
     @Profile({"dev", "development"})
-    public static class DefaultProfile {
+    public static class WebConfigurationDevelopmentProfile {
+
+        public static class CorsAllAllowingFilter implements Filter {
+
+            @Override
+            public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+                HttpServletResponse response = (HttpServletResponse) servletResponse;
+                HttpServletRequest request = (HttpServletRequest) servletRequest;
+                response.setHeader("Access-Control-Allow-Origin", "*");
+                response.setHeader("Access-Control-Allow-Methods",
+                        "POST, GET, OPTIONS, DELETE, PUT");
+                response.setHeader("Access-Control-Max-Age", "3600");
+                response.setHeader("Access-Control-Allow-Headers",
+                        "x-requested-with, authorization, content-type");
+
+                if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+                    response.setStatus(HttpServletResponse.SC_OK);
+                } else {
+                    filterChain.doFilter(servletRequest, servletResponse);
+                }
+            }
+
+            @Override
+            public void init(FilterConfig filterConfig) throws ServletException {
+
+            }
+        }
+
+        @Bean
+        public Filter corsFilter() {
+            return new CorsAllAllowingFilter();
+        }
 
         @Bean
         public WebMvcConfigurer corsConfigurer() {
