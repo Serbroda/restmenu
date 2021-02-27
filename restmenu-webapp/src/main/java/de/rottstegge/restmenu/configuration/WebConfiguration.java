@@ -1,8 +1,11 @@
 package de.rottstegge.restmenu.configuration;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.resource.PathResourceResolver;
@@ -26,5 +29,24 @@ public class WebConfiguration implements WebMvcConfigurer {
                         return requestResource.exists() && requestResource.isReadable() ? requestResource : new ClassPathResource(RESOURCES_LOCATION + "index.html");
                     }
                 });
+    }
+
+    @Configuration
+    @Profile({"dev", "development"})
+    public static class DefaultProfile {
+
+        @Bean
+        public WebMvcConfigurer corsConfigurer() {
+            return new WebMvcConfigurer() {
+
+                @Override
+                public void addCorsMappings(CorsRegistry registry) {
+                    registry.addMapping("/**")
+                            .allowedMethods("HEAD", "GET", "PUT", "POST", "DELETE",
+                                    "PATCH");
+                }
+            };
+        }
+
     }
 }
