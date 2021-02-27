@@ -6,6 +6,9 @@ import de.rottstegge.v1.model.RestaurantDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.util.Date;
 import java.util.List;
 
 @Mapper
@@ -21,4 +24,12 @@ public interface RestaurantMapper {
 
     Restaurant map(RestaurantCreateDto source);
 
+    default Date map(OffsetDateTime source) {
+        long epochMilli = source.toInstant().toEpochMilli();
+        return new Date(epochMilli);
+    }
+
+    default OffsetDateTime map(Date source) {
+        return source.toInstant().atOffset(ZoneOffset.UTC);
+    }
 }

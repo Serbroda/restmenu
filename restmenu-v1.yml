@@ -67,6 +67,25 @@ components:
       scheme: basic
   schemas:
 
+    EntityDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 123
+        version:
+          type: integer
+          example: 123
+        created:
+          type: string
+          format: date-time
+          example: 2017-07-21T17:32:28Z
+        lastModified:
+          type: string
+          format: date-time
+          example: 2017-07-21T17:32:28Z
+
     RestaurantCreateDto:
       type: object
       properties:
@@ -83,22 +102,20 @@ components:
       required: [name]
 
     RestaurantDto:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-          example: 123
-        name:
-          type: string
-          example: Ribhouse Exemplarus
-        description:
-          type: string
-          example: Steakhouse
-        address:
-          $ref: '#/components/schemas/AddressDto'
-        contact:
-          $ref: '#/components/schemas/ContactDto'
+      allOf:
+        - $ref: '#/components/schemas/EntityDto'
+        - type: object
+          properties:
+            name:
+              type: string
+              example: Ribhouse Exemplarus
+            description:
+              type: string
+              example: Steakhouse
+            address:
+              $ref: '#/components/schemas/AddressDto'
+            contact:
+              $ref: '#/components/schemas/ContactDto'
 
     AddressDto:
       type: object

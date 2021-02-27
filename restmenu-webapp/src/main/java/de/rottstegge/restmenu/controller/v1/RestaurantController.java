@@ -29,7 +29,9 @@ public class RestaurantController implements RestaurantsApi {
 
     @Override
     public ResponseEntity<RestaurantDto> getRestaurantById(@PathVariable("restaurantId") Long restaurantId) throws Exception {
-        return new ResponseEntity<>(RestaurantMapper.INSTANCE.map(restaurantService.getRestaurant(restaurantId)), HttpStatus.OK);
+        Restaurant restaurant = restaurantService.getRestaurant(restaurantId);
+        LOG.info("Found Restaurant {} for id {}", restaurant, restaurantId);
+        return new ResponseEntity<>(RestaurantMapper.INSTANCE.map(restaurant), HttpStatus.OK);
     }
 
     @Override
