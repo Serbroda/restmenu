@@ -5,6 +5,8 @@ import de.rottstegge.restmenu.model.Restaurant;
 import de.rottstegge.restmenu.service.RestaurantService;
 import de.rottstegge.v1.model.RestaurantDto;
 import de.rottstegge.v1.server.RestaurantsApi;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1")
 public class RestaurantController implements RestaurantsApi {
+
+    private static final Logger LOG = LoggerFactory.getLogger(RestaurantController.class);
 
     private final RestaurantService restaurantService;
 
@@ -29,7 +33,9 @@ public class RestaurantController implements RestaurantsApi {
 
     @Override
     public ResponseEntity<List<RestaurantDto>> getRestaurants() throws Exception {
-        return new ResponseEntity<>(RestaurantMapper.INSTANCE.mapAll(restaurantService.getRestaurants()), HttpStatus.OK);
+        List<Restaurant> restaurants = restaurantService.getRestaurants();
+        LOG.info("Found {} restaurants", restaurants.size());
+        return new ResponseEntity<>(RestaurantMapper.INSTANCE.mapAll(restaurants), HttpStatus.OK);
     }
 
     @Override
