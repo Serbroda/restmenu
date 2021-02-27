@@ -19,12 +19,12 @@ spring:
       naming:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
       ddl-auto: validate
-    show-sql: true
+    show-sql: false
 
   liquibase:
     change-log: classpath:/changelog/database-schema.xml
 
   h2:
     console:
-      enabled: true
+      enabled: false
       path: /h2-console
