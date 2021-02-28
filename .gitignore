@@ -272,3 +272,6 @@ dist
 
 restmenu-webapp/src/main/resources/public
 /feasibility.yml
+node.exe
+npm
+npm.cmd
