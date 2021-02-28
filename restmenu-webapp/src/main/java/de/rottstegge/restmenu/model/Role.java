@@ -3,6 +3,7 @@ package de.rottstegge.restmenu.model;
 import de.rottstegge.restmenu.model.base.AbstractBaseEntity;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -10,7 +11,7 @@ import java.util.Set;
 public class Role extends AbstractBaseEntity {
 
     private String name;
-    private Set<Permission> permissions;
+    private Set<Permission> permissions = new HashSet<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
