@@ -8,9 +8,10 @@
     <artifactId>restmenu-database</artifactId>
 
     <parent>
-        <artifactId>restmenu-server</artifactId>
+        <artifactId>restmenu</artifactId>
         <groupId>de.rottstegge</groupId>
         <version>0.0.1-SNAPSHOT</version>
+        <relativePath>..</relativePath>
     </parent>
 
     <dependencies>

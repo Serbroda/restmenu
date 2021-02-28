@@ -8,10 +8,10 @@
     <artifactId>restmenu-sdk-angular</artifactId>
 
     <parent>
-        <artifactId>restmenu-server</artifactId>
+        <artifactId>restmenu</artifactId>
         <groupId>de.rottstegge</groupId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath>..</relativePath>
     </parent>
 
     <build>
