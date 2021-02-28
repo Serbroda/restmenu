@@ -62,9 +62,10 @@ servers:
 
 components:
   securitySchemes:
-    basicAuth:
+    bearerAuth:
       type: http
-      scheme: basic
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
 
     EntityDto:
@@ -202,4 +203,4 @@ components:
           example: -73.935242
 
 security:
-  - basicAuth: []
+  - bearerAuth: []

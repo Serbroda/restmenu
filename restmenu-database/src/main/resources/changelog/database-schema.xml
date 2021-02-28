@@ -5,6 +5,162 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
+    <!-- App User, Roles, Permissions -->
+
+    <changeSet id="2021-02-28: create table app_user" author="drottstegge">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="app_user"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="app_user">
+            <column name="id" type="bigint" autoIncrement="true" incrementBy="1" startWith="1">
+                <constraints primaryKey="true" primaryKeyName="pk_app_user_id"/>
+            </column>
+            <column name="version" type="int" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="last_modified" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP"/>
+
+            <column name="username" type="varchar(150)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uc_app_user_username"/>
+            </column>
+            <column name="password" type="varchar(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="salutation" type="varchar(150)"/>
+            <column name="firstname" type="varchar(150)"/>
+            <column name="lastname" type="varchar(150)"/>
+            <column name="phone1" type="varchar(80)"/>
+            <column name="phone2" type="varchar(80)"/>
+            <column name="email1" type="varchar(150)"/>
+            <column name="email2" type="varchar(150)"/>
+            <column name="website" type="varchar(255)"/>
+            <column
+                    name="state"
+                    type="varchar(255)"
+                    defaultValue="REGISTERED">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2021-02-28: create table app_role" author="drottstegge">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="app_role"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="app_role">
+            <column name="id" type="bigint" autoIncrement="true" incrementBy="1" startWith="1">
+                <constraints primaryKey="true" primaryKeyName="pk_app_role_id"/>
+            </column>
+            <column name="version" type="int" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="last_modified" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP"/>
+
+            <column name="name" type="varchar(150)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uc_app_role_name"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2021-02-28: create table app_permission" author="drottstegge">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="app_permission"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="app_permission">
+            <column name="id" type="bigint" autoIncrement="true" incrementBy="1" startWith="1">
+                <constraints primaryKey="true" primaryKeyName="pk_app_permission_id"/>
+            </column>
+            <column name="version" type="int" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="last_modified" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP"/>
+
+            <column name="name" type="varchar(150)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uc_app_permission_name"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2021-02-28: create table app_role_app_permission" author="drottstegge">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="app_role_app_permission"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="app_role_app_permission">
+            <column name="app_role_id" type="bigint">
+                <constraints nullable="false" referencedTableName="app_role" referencedColumnNames="id"
+                             foreignKeyName="fk_app_role_app_permission_app_role_id"/>
+            </column>
+            <column name="permissions_id" type="bigint">
+                <constraints nullable="false" referencedTableName="app_permission" referencedColumnNames="id"
+                             foreignKeyName="fk_app_role_app_permission_permissions_id"/>
+            </column>
+        </createTable>
+
+        <addUniqueConstraint tableName="app_role_app_permission" columnNames="app_role_id,permissions_id"
+                             constraintName="uc_app_role_app_permission_app_role_id_permissions_id"/>
+    </changeSet>
+
+    <changeSet id="2021-02-28: create table app_user_app_role" author="drottstegge">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="app_user_app_role"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="app_user_app_role">
+            <column name="app_user_id" type="bigint">
+                <constraints nullable="false" referencedTableName="app_user" referencedColumnNames="id"
+                             foreignKeyName="fk_app_user_app_role_app_user_id"/>
+            </column>
+            <column name="roles_id" type="bigint">
+                <constraints nullable="false" referencedTableName="app_permission" referencedColumnNames="id"
+                             foreignKeyName="fk_app_user_app_role_roles_id"/>
+            </column>
+        </createTable>
+
+        <addUniqueConstraint tableName="app_user_app_role" columnNames="app_user_id,roles_id"
+                             constraintName="uc_app_user_app_role_app_user_id_roles_id"/>
+    </changeSet>
+
+    <changeSet id="2021-02-28: create table app_user_app_permission" author="drottstegge">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="app_user_app_permission"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="app_user_app_permission">
+            <column name="app_user_id" type="bigint">
+                <constraints nullable="false" referencedTableName="app_user" referencedColumnNames="id"
+                             foreignKeyName="fk_app_user_app_permission_app_user_id"/>
+            </column>
+            <column name="permissions_id" type="bigint">
+                <constraints nullable="false" referencedTableName="app_permission" referencedColumnNames="id"
+                             foreignKeyName="fk_app_user_app_permission_permissions_id"/>
+            </column>
+        </createTable>
+
+        <addUniqueConstraint tableName="app_user_app_permission" columnNames="app_user_id,permissions_id"
+                             constraintName="uc_app_user_app_permission_app_user_id_permissions_id"/>
+    </changeSet>
+
+    <!-- -->
+
     <changeSet id="2021-02-21: create table restaurant" author="drottstegge">
         <preConditions onFail="MARK_RAN">
             <not>
@@ -13,14 +169,14 @@
         </preConditions>
 
         <createTable tableName="restaurant">
-            <column name="id" type="bigint" autoIncrement="true" incrementBy="1">
+            <column name="id" type="bigint" autoIncrement="true" incrementBy="1" startWith="1">
+                <constraints primaryKey="true" primaryKeyName="pk_restaurant_id"/>
+            </column>
+            <column name="version" type="int" defaultValueNumeric="0">
                 <constraints nullable="false"/>
             </column>
-            <column name="version" type="int" defaultValue="0">
-                <constraints nullable="false"/>
-            </column>
-            <column name="created" type="datetime"/>
-            <column name="last_modified" type="datetime"/>
+            <column name="created" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="last_modified" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP"/>
 
             <column name="name" type="varchar(150)">
                 <constraints nullable="false"/>
@@ -52,14 +208,14 @@
         </preConditions>
 
         <createTable tableName="menu">
-            <column name="id" type="bigint" autoIncrement="true" incrementBy="1">
+            <column name="id" type="bigint" autoIncrement="true" incrementBy="1" startWith="1">
+                <constraints primaryKey="true" primaryKeyName="pk_menu_id"/>
+            </column>
+            <column name="version" type="int" defaultValueNumeric="0">
                 <constraints nullable="false"/>
             </column>
-            <column name="version" type="int" defaultValue="0">
-                <constraints nullable="false"/>
-            </column>
-            <column name="created" type="datetime"/>
-            <column name="last_modified" type="datetime"/>
+            <column name="created" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="last_modified" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP"/>
 
             <column name="restaurant_id" type="bigint">
                 <constraints nullable="false" referencedTableName="restaurant" referencedColumnNames="id"
@@ -80,14 +236,14 @@
         </preConditions>
 
         <createTable tableName="category">
-            <column name="id" type="bigint" autoIncrement="true" incrementBy="1">
+            <column name="id" type="bigint" autoIncrement="true" incrementBy="1" startWith="1">
+                <constraints primaryKey="true" primaryKeyName="pk_category_id"/>
+            </column>
+            <column name="version" type="int" defaultValueNumeric="0">
                 <constraints nullable="false"/>
             </column>
-            <column name="version" type="int" defaultValue="0">
-                <constraints nullable="false"/>
-            </column>
-            <column name="created" type="datetime"/>
-            <column name="last_modified" type="datetime"/>
+            <column name="created" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="last_modified" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP"/>
 
             <column name="menu_id" type="bigint">
                 <constraints nullable="false" referencedTableName="menu" referencedColumnNames="id"
@@ -108,14 +264,14 @@
         </preConditions>
 
         <createTable tableName="meal">
-            <column name="id" type="bigint" autoIncrement="true" incrementBy="1">
+            <column name="id" type="bigint" autoIncrement="true" incrementBy="1" startWith="1">
+                <constraints primaryKey="true" primaryKeyName="pk_meal_id"/>
+            </column>
+            <column name="version" type="int" defaultValueNumeric="0">
                 <constraints nullable="false"/>
             </column>
-            <column name="version" type="int" defaultValue="0">
-                <constraints nullable="false"/>
-            </column>
-            <column name="created" type="datetime"/>
-            <column name="last_modified" type="datetime"/>
+            <column name="created" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="last_modified" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP"/>
 
             <column name="menu_id" type="bigint">
                 <constraints nullable="false" referencedTableName="menu" referencedColumnNames="id"

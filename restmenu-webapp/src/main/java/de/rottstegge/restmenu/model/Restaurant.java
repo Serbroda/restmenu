@@ -12,7 +12,7 @@ public class Restaurant extends AbstractBaseEntity {
     private String name;
     private String description;
     private Address address;
-    private Contact contact;
+    private Contact contact = new Contact();
     private List<Menu> menus;
 
     @Id
