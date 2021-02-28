@@ -11,26 +11,25 @@
     <artifactId>restmenu</artifactId>
     <groupId>de.rottstegge</groupId>
     <version>0.0.1-SNAPSHOT</version>
-    <relativePath>..</relativePath>
   </parent>
 
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-clean-plugin</artifactId>
-        <version>3.1.0</version>
-        <configuration>
-          <filesets>
-            <fileset>
-              <directory>${basedir}/node_modules</directory>
-            </fileset>
-            <fileset>
-              <directory>${basedir}/dist</directory>
-            </fileset>
-          </filesets>
-        </configuration>
-      </plugin>
+<!--      <plugin>-->
+<!--        <groupId>org.apache.maven.plugins</groupId>-->
+<!--        <artifactId>maven-clean-plugin</artifactId>-->
+<!--        <version>3.1.0</version>-->
+<!--        <configuration>-->
+<!--          <filesets>-->
+<!--            <fileset>-->
+<!--              <directory>${basedir}/node_modules</directory>-->
+<!--            </fileset>-->
+<!--            <fileset>-->
+<!--              <directory>${basedir}/dist</directory>-->
+<!--            </fileset>-->
+<!--          </filesets>-->
+<!--        </configuration>-->
+<!--      </plugin>-->
 
       <plugin>
         <groupId>com.github.eirslett</groupId>
