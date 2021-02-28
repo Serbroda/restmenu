@@ -45,14 +45,6 @@ public abstract class AbstractBaseEntity implements BaseEntity {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        AbstractBaseEntity that = (AbstractBaseEntity) o;
-        return id == that.id;
-    }
-
-    @Override
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "last_modified")
     public Date getLastModified() {
@@ -74,6 +66,14 @@ public abstract class AbstractBaseEntity implements BaseEntity {
     @PreUpdate
     protected void setLastModifiedOnUpdate() {
         lastModified = new Date();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AbstractBaseEntity that = (AbstractBaseEntity) o;
+        return id == that.id;
     }
 
     @Override
