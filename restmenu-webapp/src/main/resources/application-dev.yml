@@ -3,4 +3,5 @@ spring:
     show-sql: true
   h2:
     console:
-      enabled: true
+      enabled: false
+      path: /h2-console
