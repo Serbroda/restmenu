@@ -1,8 +1,9 @@
-package de.rottstegge.restmenu.configuration;
+package de.rottstegge.restmenu.web.filter;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.rottstegge.restmenu.model.JwtResponse;
 import de.rottstegge.restmenu.model.User;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,16 +19,22 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+import static de.rottstegge.restmenu.web.filter.JWTConstants.CONTENT_TYPE;
+import static de.rottstegge.restmenu.web.filter.JWTConstants.TOKEN_TYPE;
 
-    private static final String SECRET = "SECRET_KEY";
-    private static final long EXPIRATION_TIME = 900_000; // 15 mins
+public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
 
-    public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
+    private final String secretKey;
+    private final long expirationMs;
+
+    public JWTAuthenticationFilter(AuthenticationManager authenticationManager, String secretKey, long expirationMs, String signinUrl) {
         this.authenticationManager = authenticationManager;
-        setFilterProcessesUrl("/api/v1/signin");
+        this.secretKey = secretKey;
+        this.expirationMs = expirationMs;
+
+        setFilterProcessesUrl(signinUrl);
     }
 
     @Override
@@ -50,11 +57,14 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String token = JWT.create()
                 .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .sign(Algorithm.HMAC512(SECRET));
+                .withExpiresAt(new Date(System.currentTimeMillis() + expirationMs))
+                .sign(Algorithm.HMAC512(secretKey));
 
-        String body = token;
+        JwtResponse jwtResponse = new JwtResponse(token, TOKEN_TYPE.toLowerCase(), expirationMs / 1000);
 
+        String body = new ObjectMapper().writeValueAsString(jwtResponse);
+
+        response.setContentType(CONTENT_TYPE);
         response.getWriter().write(body);
         response.getWriter().flush();
     }
