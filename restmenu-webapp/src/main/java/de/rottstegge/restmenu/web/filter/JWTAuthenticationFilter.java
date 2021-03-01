@@ -27,12 +27,12 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private final AuthenticationManager authenticationManager;
 
     private final String secretKey;
-    private final long expirationMs;
+    private final long expirationSeconds;
 
-    public JWTAuthenticationFilter(AuthenticationManager authenticationManager, String secretKey, long expirationMs, String signinUrl) {
+    public JWTAuthenticationFilter(AuthenticationManager authenticationManager, String secretKey, long expirationSeconds, String signinUrl) {
         this.authenticationManager = authenticationManager;
         this.secretKey = secretKey;
-        this.expirationMs = expirationMs;
+        this.expirationSeconds = expirationSeconds;
 
         setFilterProcessesUrl(signinUrl);
     }
@@ -57,10 +57,10 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String token = JWT.create()
                 .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + expirationMs))
+                .withExpiresAt(new Date(System.currentTimeMillis() + (expirationSeconds * 1000)))
                 .sign(Algorithm.HMAC512(secretKey));
 
-        JwtResponse jwtResponse = new JwtResponse(token, TOKEN_TYPE.toLowerCase(), expirationMs / 1000);
+        JwtResponse jwtResponse = new JwtResponse(token, TOKEN_TYPE.toLowerCase(), expirationSeconds);
 
         String body = new ObjectMapper().writeValueAsString(jwtResponse);
 

@@ -25,8 +25,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Value("${application.security.jwt.secret}")
     private String jwtSecret;
 
-    @Value("${application.security.jwt.expiration-ms}")
-    private long jwtExpirationMs;
+    @Value("${application.security.jwt.expiration-seconds}")
+    private long jwtExpirationSeconds;
 
     @Value("${application.security.jwt.signin-url}")
     private String jwtSigninUrl;
@@ -44,7 +44,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                 .authenticated()
                 .and()
-                .addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtSecret, jwtExpirationMs, jwtSigninUrl))
+                .addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtSecret, jwtExpirationSeconds, jwtSigninUrl))
                 .addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtSecret))
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
