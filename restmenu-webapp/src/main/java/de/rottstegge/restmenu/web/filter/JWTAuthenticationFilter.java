@@ -1,10 +1,9 @@
 package de.rottstegge.restmenu.web.filter;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.rottstegge.restmenu.model.JwtResponse;
 import de.rottstegge.restmenu.model.User;
+import de.rottstegge.restmenu.service.JwtService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,22 +16,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 
 import static de.rottstegge.restmenu.web.filter.JWTConstants.CONTENT_TYPE;
-import static de.rottstegge.restmenu.web.filter.JWTConstants.TOKEN_TYPE;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
 
-    private final String secretKey;
-    private final long expirationSeconds;
+    private final JwtService jwtService;
 
-    public JWTAuthenticationFilter(AuthenticationManager authenticationManager, String secretKey, long expirationSeconds, String signinUrl) {
+    public JWTAuthenticationFilter(AuthenticationManager authenticationManager, JwtService jwtService, String signinUrl) {
         this.authenticationManager = authenticationManager;
-        this.secretKey = secretKey;
-        this.expirationSeconds = expirationSeconds;
+        this.jwtService = jwtService;
 
         setFilterProcessesUrl(signinUrl);
     }
@@ -55,12 +50,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) authResult.getPrincipal();
 
-        String token = JWT.create()
-                .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + (expirationSeconds * 1000)))
-                .sign(Algorithm.HMAC512(secretKey));
-
-        JwtResponse jwtResponse = new JwtResponse(token, TOKEN_TYPE.toLowerCase(), expirationSeconds);
+        JwtResponse jwtResponse = jwtService.create(user.getUsername());
 
         String body = new ObjectMapper().writeValueAsString(jwtResponse);
 

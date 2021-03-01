@@ -1,5 +1,6 @@
 package de.rottstegge.restmenu.configuration;
 
+import de.rottstegge.restmenu.service.JwtService;
 import de.rottstegge.restmenu.web.filter.JWTAuthenticationFilter;
 import de.rottstegge.restmenu.web.filter.JWTAuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService appUserDetailsService;
 
-    @Value("${application.security.jwt.secret}")
-    private String jwtSecret;
-
-    @Value("${application.security.jwt.expiration-seconds}")
-    private long jwtExpirationSeconds;
+    @Autowired
+    private JwtService jwtService;
 
     @Value("${application.security.jwt.signin-url}")
     private String jwtSigninUrl;
@@ -44,8 +42,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                 .authenticated()
                 .and()
-                .addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtSecret, jwtExpirationSeconds, jwtSigninUrl))
-                .addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtSecret))
+                .addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtService, jwtSigninUrl))
+                .addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtService))
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.headers().frameOptions().disable();

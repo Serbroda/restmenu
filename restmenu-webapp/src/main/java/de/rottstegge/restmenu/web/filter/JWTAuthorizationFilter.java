@@ -2,6 +2,7 @@ package de.rottstegge.restmenu.web.filter;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import de.rottstegge.restmenu.service.JwtService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,11 +20,11 @@ import static de.rottstegge.restmenu.web.filter.JWTConstants.TOKEN_TYPE;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
-    private final String secretKey;
+    private final JwtService jwtService;
 
-    public JWTAuthorizationFilter(AuthenticationManager authenticationManager, String secretKey) {
+    public JWTAuthorizationFilter(AuthenticationManager authenticationManager, JwtService jwtService) {
         super(authenticationManager);
-        this.secretKey = secretKey;
+        this.jwtService = jwtService;
     }
 
     @Override
@@ -46,10 +47,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
         if (token != null) {
             // parse the token.
-            String user = JWT.require(Algorithm.HMAC512(secretKey.getBytes()))
-                    .build()
-                    .verify(token.replace(TOKEN_TYPE + " ", ""))
-                    .getSubject();
+            String user = jwtService.verify(token).getSubject();
 
             if (user != null) {
                 // new arraylist means authorities
