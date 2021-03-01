@@ -34,5 +34,5 @@ application:
     jwt:
       secret: Teilgebiet-Hofmaler-Recyclingcontainer-Datendurchsatz-8
       expiration-ms: 86400000
-      signin-url: /api/v1/signin
-      signup-url: /api/v1/signup
+      signin-url: /api/signin
+      signup-url: /api/signup
